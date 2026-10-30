@@ -1,0 +1,8 @@
+{
+  "max_upload_mb": 15,
+  "allowed_extensions": ["png", "jpg", "jpeg", "webp"],
+  "default_blend_alpha": 0.5,
+  "default_noise_strength": 20,
+  "default_background_color": "#ffffff",
+  "background_threshold": 45
+}

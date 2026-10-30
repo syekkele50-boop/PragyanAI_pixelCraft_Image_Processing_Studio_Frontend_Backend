@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Process, transform and combine images with Image Processing Studio.">
+  <title>Image Processing Studio</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <p class="eyebrow">PYTHON · PILLOW · NUMPY</p>
+      <h1>Image Processing Studio</h1>
+      <p>Upload images, explore filters, and download your results.</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="panel">
+      <h2>1. Upload your images</h2>
+      <p class="muted">Use a second image for blending, addition, or subtraction.</p>
+
+      <div class="upload-grid">
+        <label class="upload-box">
+          <span class="upload-icon">📷</span>
+          <strong>Primary image</strong>
+          <span class="muted">Choose PNG, JPG, or WEBP</span>
+          <input id="imageInput" type="file" accept="image/png,image/jpeg,image/webp">
+        </label>
+
+        <label class="upload-box">
+          <span class="upload-icon">🖼️</span>
+          <strong>Second image</strong>
+          <span class="muted">Optional; needed for two-image operations</span>
+          <input id="image2Input" type="file" accept="image/png,image/jpeg,image/webp">
+        </label>
+      </div>
+
+      <label class="field-label" for="multipleInput">Multiple images for collage</label>
+      <input id="multipleInput" type="file" accept="image/png,image/jpeg,image/webp" multiple>
+      <p class="muted small" id="fileStatus" aria-live="polite">No images selected.</p>
+    </section>
+
+    <section class="panel">
+      <h2>2. Select an operation</h2>
+
+      <label class="field-label" for="operation">Image processing operation</label>
+      <select id="operation">
+        <option value="grayscale">Grayscale / Black and white tones</option>
+        <option value="sketch">Pencil sketch</option>
+        <option value="background">Change background</option>
+        <option value="blend">Blend two images</option>
+        <option value="pixelate">Resize to 16 / 32 / 64 pixels</option>
+        <option value="sharpen_resize">Sharpen and resize to 8 / 16 / 32 / 64 pixels</option>
+        <option value="sharpen">Sharpen image</option>
+        <option value="blur">Gaussian blur</option>
+        <option value="add">Add two images</option>
+        <option value="subtract">Subtract two images</option>
+        <option value="noise">Add noise</option>
+        <option value="collage">Create multiple-image collage</option>
+        <option value="pipeline">Apply multiple operations</option>
+      </select>
+
+      <div class="options-grid">
+        <div class="option" id="sizeOption">
+          <label class="field-label" for="pixelSize">Maximum image dimension</label>
+          <select id="pixelSize">
+            <option value="8">8 pixels</option>
+            <option value="16">16 pixels</option>
+            <option value="32" selected>32 pixels</option>
+            <option value="64">64 pixels</option>
+          </select>
+          <p class="muted small">The longest side is set to this size; aspect ratio is preserved.</p>
+        </div>
+
+        <div class="option" id="blendOption">
+          <label class="field-label" for="blendAlpha">Blend strength: <span id="blendValue">50%</span></label>
+          <input id="blendAlpha" type="range" min="0" max="100" value="50">
+        </div>
+
+        <div class="option" id="backgroundOption">
+          <label class="field-label" for="backgroundColor">Replacement background color</label>
+          <input id="backgroundColor" type="color" value="#ffffff">
+          <p class="muted small">Best for plain backgrounds. A second image can be used as the replacement background.</p>
+        </div>
+
+        <div class="option" id="noiseOption">
+          <label class="field-label" for="noiseStrength">Noise intensity: <span id="noiseValue">20</span></label>
+          <input id="noiseStrength" type="range" min="0" max="100" value="20">
+          <label class="field-label" for="noiseType">Noise type</label>
+          <select id="noiseType">
+            <option value="gaussian">Gaussian noise</option>
+            <option value="salt_pepper">Salt and pepper noise</option>
+          </select>
+        </div>
+
+        <div class="option" id="pipelineOption">
+          <span class="field-label">Operations to apply in order</span>
+          <label class="check"><input type="checkbox" name="pipeline" value="grayscale"> Grayscale</label>
+          <label class="check"><input type="checkbox" name="pipeline" value="sketch"> Pencil sketch</label>
+          <label class="check"><input type="checkbox" name="pipeline" value="sharpen"> Sharpen</label>
+          <label class="check"><input type="checkbox" name="pipeline" value="blur"> Blur</label>
+          <label class="check"><input type="checkbox" name="pipeline" value="pixelate"> Pixelate</label>
+          <label class="check"><input type="checkbox" name="pipeline" value="noise"> Add noise</label>
+        </div>
+      </div>
+
+      <button id="processButton" class="button" type="button">Process image</button>
+      <div id="message" class="message" role="status" aria-live="polite"></div>
+    </section>
+
+    <section class="preview-grid">
+      <article class="panel">
+        <h2>Original image</h2>
+        <div class="preview">
+          <img id="originalPreview" alt="Original image preview" hidden>
+          <p id="originalEmpty" class="muted">Your uploaded image will appear here.</p>
+        </div>
+      </article>
+
+      <article class="panel">
+        <h2>Processed result</h2>
+        <div class="preview">
+          <img id="resultPreview" alt="Processed image preview" hidden>
+          <p id="resultEmpty" class="muted">Your processed result will appear here.</p>
+        </div>
+        <a id="downloadButton" class="button download" download="processed-image.png" hidden>Download PNG</a>
+      </article>
+    </section>
+
+    <footer>
+      <p>Image Processing Studio · Frontend: HTML, CSS, JavaScript · Backend: Python and Flask</p>
+    </footer>
+  </main>
+</body>
+</html>
